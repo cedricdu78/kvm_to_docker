@@ -20,5 +20,6 @@
         restart_policy: always
         privileged: true
         image: "{{ image_name }}:{{ image_version }}"
+        pull: true
         command: bash -c '/sbin/init text'
       delegate_to: "{{ hypervisor }}"
