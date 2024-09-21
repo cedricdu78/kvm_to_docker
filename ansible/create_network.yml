@@ -1,0 +1,30 @@
+---
+
+- hosts: node
+  gather_facts: false
+  vars:
+    subnet: 192.168.1.0/24
+    gateway: 192.168.1.254
+    range: 192.168.1.200/29
+    #subnet: 172.16.0.0/16
+    #gateway: 172.16.0.1
+    #range: 172.16.144.0/24
+    interface: eth0
+    network_name: mymacvlan
+  tasks:
+    - name: check network exist
+      docker_network:
+        name: "{{ network_name }}"
+        state: present
+      register: reg_net
+      check_mode: true
+      changed_when: false
+
+    - name: create macvlan network
+      shell: docker network create -d macvlan
+        --subnet={{ subnet }}
+        --gateway={{ gateway }}
+        --ip-range={{ range }}
+        -o parent={{ interface }}
+        {{ network_name }}
+      when: not reg_net.network

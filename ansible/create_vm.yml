@@ -1,0 +1,24 @@
+---
+
+- hosts: virtual_machine
+  gather_facts: false
+  vars:
+    network_name: mymacvlan
+    image_name: "{{ (group_names | select('match', 'ubuntu_'))[0].split('_')[1] }}-qcow2"
+    image_version: 202409
+  tasks:
+    - name: Container present
+      docker_container:
+        name: "{{ inventory_hostname }}"
+        hostname: "{{ inventory_hostname }}"
+        memory: "{{ memory }}M"
+        networks:
+          - name: "{{ network_name }}"
+            ipv4_address: "{{ address_ip }}"
+        mac_address: "{{ address_mac }}"
+        state: started
+        restart_policy: always
+        privileged: true
+        image: "{{ image_name }}:{{ image_version }}"
+        command: bash -c '/sbin/init text'
+      delegate_to: "{{ hypervisor }}"
