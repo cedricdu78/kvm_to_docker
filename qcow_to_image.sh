@@ -14,7 +14,7 @@ modprobe nbd max_part=8
 mount|grep $namewithoutqcow2 && umount $namewithoutqcow2
 
 qemu-nbd --disconnect /dev/nbd0 &> /dev/null || true
-qemu-nbd --connect=/dev/nbd0 $shortname && sleep 3
+qemu-nbd --connect=/dev/nbd0 $qcow2 && sleep 3
 
 rm -rf $namewithoutqcow2
 mkdir $namewithoutqcow2

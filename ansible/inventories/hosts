@@ -3,11 +3,20 @@
 192.168.1.101
 
 [virtual_machine:children]
-ubuntu_focal
+ubuntu_noble
 ubuntu_jammy
+ubuntu_focal
+ubuntu_bionic
+
+[ubuntu_noble]
+vm01 memory=4096 address_ip=192.168.1.200 address_mac=02:00:00:a8:01:66 hypervisor=192.168.1.100
 
 [ubuntu_jammy]
-vm01 memory=2048 address_ip=192.168.1.200 address_mac=02:00:01:a8:01:66 hypervisor=192.168.1.100
+vm02 memory=4096 address_ip=192.168.1.201 address_mac=02:00:01:a8:01:66 hypervisor=192.168.1.101
 
 [ubuntu_focal]
-vm02 memory=4096 address_ip=192.168.1.201 address_mac=02:00:00:a8:01:66 hypervisor=192.168.1.101
+vm03 memory=4096 address_ip=192.168.1.202 address_mac=02:00:02:a8:01:66 hypervisor=192.168.1.100
+
+[ubuntu_bionic]
+vm04 memory=4096 address_ip=192.168.1.203 address_mac=02:00:03:a8:01:66 hypervisor=192.168.1.101
+

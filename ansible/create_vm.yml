@@ -5,7 +5,7 @@
   vars:
     network_name: mymacvlan
     image_name: "{{ (group_names | select('match', 'ubuntu_'))[0].split('_')[1] }}-qcow2"
-    image_version: 202409
+    image_version: latest
   tasks:
     - name: Container present
       docker_container:
@@ -20,6 +20,6 @@
         restart_policy: always
         privileged: true
         image: "{{ image_name }}:{{ image_version }}"
-        pull: true
+        pull: false
         command: bash -c '/sbin/init text'
       delegate_to: "{{ hypervisor }}"

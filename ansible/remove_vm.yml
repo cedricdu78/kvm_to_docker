@@ -1,0 +1,11 @@
+---
+
+- hosts: virtual_machine
+  gather_facts: false
+  tasks:
+    - name: Container absent
+      docker_container:
+        name: "{{ inventory_hostname }}"
+        state: absent
+        force_kill: true
+      delegate_to: "{{ hypervisor }}"
