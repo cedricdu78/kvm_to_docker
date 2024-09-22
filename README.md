@@ -3,8 +3,9 @@
 ### Command
 docker run --rm -ti --name vm01 --hostname vm01  --network mymacvlan --ip 192.168.1.200 --privileged noble-qcow2:test1 bash -c '/sbin/init text'
 
-#### Not work
-docker run --rm -ti --name vm01 --hostname vm01  --network mymacvlan --ip 192.168.1.200 --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup/vm01.scope:/sys/fs/cgroup:rw  jammy-qcow2:test2 bash -c '/sbin/init text'
+#### test without privileged mode
+docker run --rm -ti --name vmtest --hostname vmtest --network mymacvlan --ip 192.168.1.210 --tmpfs /run --tmpfs /run/lock --cgroupns host -v /sys/fs/cgroup:/sys/fs/cgroup:rw jammy-qcow2:latest bash -c '/sbin/init text'
+docker run --rm -ti --name vmtest --hostname vmtest --network mymacvlan --ip 192.168.1.210 --tmpfs /run --tmpfs /run/lock --cgroupns host -v /sys/fs/cgroup:/sys/fs/cgroup:rw --security-opt seccomp=unconfined --cap-add=all jammy-qcow2:latest bash -c '/sbin/init text'
 
 ### patchs
 #### all
